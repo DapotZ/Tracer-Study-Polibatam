@@ -29,7 +29,7 @@
 </div>
 
 <!-- Modal Logout -->
-<div id="modal-logout" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+<div id="modal-logout" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
     <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-xs sm:max-w-sm relative">
         <div class="flex flex-col items-center text-center">
             <img src="{{ asset('assets/images/logout.png') }}" alt="Logout" class="w-16 h-16 mb-3" />
@@ -49,7 +49,7 @@
 </div>
 
 <!-- Modal Recovery Code -->
-<div id="modal-recovery" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+<div id="modal-recovery" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
     <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-xs sm:max-w-sm relative">
         <div class="flex flex-col items-center text-center">
             <i class="fas fa-shield-alt text-sky-600 text-5xl mb-3"></i>
@@ -74,26 +74,39 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Buka modal saat tombol logout diklik
-    document.getElementById('logout-btn').addEventListener('click', function(e) {
+    const modal = document.getElementById('modal-logout');
+    const logoutBtn = document.getElementById('logout-btn');
+    const modalRecovery = document.getElementById('modal-recovery');
+
+    logoutBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        document.getElementById('modal-logout').classList.remove('hidden');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        modalRecovery.classList.remove('hidden');
+        modalRecovery.classList.add('flex');
         document.body.style.overflow = 'hidden';
     });
 });
 
-// Tutup modal
 function closeLogoutModal() {
-    document.getElementById('modal-logout').classList.add('hidden');
+    const modal = document.getElementById('modal-logout');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
     document.body.style.overflow = 'auto';
 }
 
-// Tutup modal jika klik backdrop
 document.addEventListener('click', function(e) {
     if (e.target.id === 'modal-logout') {
         closeLogoutModal();
     }
 });
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeLogoutModal();
+    }
+});
+
 
 // Tutup modal dengan Escape
 document.addEventListener('keydown', function(e) {
@@ -103,21 +116,31 @@ document.addEventListener('keydown', function(e) {
 });
 
 function showRecoveryCodes() {
-    document.getElementById('modal-recovery').classList.remove('hidden');
+    const modal = document.getElementById('modal-recovery');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
     document.body.style.overflow = 'hidden';
 }
+
 function closeRecoveryModal() {
-    document.getElementById('modal-recovery').classList.add('hidden');
+    const modal = document.getElementById('modal-recovery');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
     document.body.style.overflow = 'auto';
 }
+
+// Tutup modal jika klik backdrop
 document.addEventListener('click', function(e) {
     if (e.target.id === 'modal-recovery') {
         closeRecoveryModal();
     }
 });
+
+// Tutup modal dengan Escape
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeRecoveryModal();
     }
 });
+
 </script>
